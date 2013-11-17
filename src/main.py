@@ -1,30 +1,40 @@
 from sklearn import svm
 
+import csv
 import serial
+import shared
 import sys
 
-DEVICE = '/dev/ttyACM0'
-
-def list_from_string(input):
-	"""Reads in a comma delmited string and returns a list."""
-	output = map(int, input.split(','))
-	return output
-
-def read_from_serial(ser):
-	input = ser.readline()
-	# read input string from serial in here
-
-	return input
-
 def main():
-	ser = serial.Serial(DEVICE, 9600)
+	file = open('../data/db.csv', 'rb')
+	reader = csv.reader(file)
+
+	ser = shared.init()
+
+
+	data = []
+	label = []
+	label_map = []
+	i = 0
+	for row in reader:
+		data.append(row[:-1])
+		label.append(i)
+		label_map.append(row[-1])
+		i = i + 1
+
+	clf = svm.SVC()
+	clf.fit(data, label)
+
+	ser.flushInput()
 
 	# read input from serial
-	serial_input = read_from_serial(ser)
-	# print comma delimited list from input string
-	print list_from_string(serial_input)
+	serial_input = shared.read_from_serial(ser)
+	list = shared.list_from_string(serial_input)
+	print list	
 
-	
+	print label_map[int(clf.predict(list))]
+
+	file.close()
 
 if __name__ == "__main__":
 	main()
