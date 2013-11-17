@@ -12,7 +12,12 @@ def init():
 
 def list_from_string(input):
 	"""Reads in a comma delmited string and returns a list."""
-	output = map(int, input.split(','))
+
+	# if we get a parsing error, return an empty array
+	try:
+		output = map(int, input.split(','))
+	except:
+		return []
 	return output
 
 def read_from_serial(ser):
@@ -21,19 +26,25 @@ def read_from_serial(ser):
 	# read input string from serial in here
 	return input
 
-def read_combined(ser) {
+def read_combined(ser):
+	"""Combines the above two methods - gets the string from serial and outputs the integer list."""
 	line = read_from_serial(ser)
 	list = list_from_string(line)
 	return list
-}
 
-def read(ser) {
+def read(ser):
+	"""Uses read_combined to get the integer list and runs error checking until a valid list is found."""
+	# flush before read
+	ser.flushInput()
 	list = [-1]
 	sum = 0
 
-	while len(list) != 6 and sum != list[-1]:
+	while len(list) != 6 or sum != list[-1]:
 		list = read_combined(ser)
+		sum = 0
 		for x in list[:-1]:
 			sum = sum + x
+
+	list = [x * 10 for x in list]
+
 	return list[:-1]
-}

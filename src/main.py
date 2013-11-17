@@ -11,7 +11,6 @@ def main():
 
 	ser = shared.init()
 
-
 	data = []
 	label = []
 	label_map = []
@@ -22,17 +21,18 @@ def main():
 		label_map.append(row[-1])
 		i = i + 1
 
-	clf = svm.SVC()
+	clf = svm.SVC(kernel = 'linear')
 	clf.fit(data, label)
 
-	ser.flushInput()
+	#ser.flushInput()
 
-	# read input from serial
-	serial_input = shared.read_from_serial(ser)
-	list = shared.list_from_string(serial_input)
-	print list	
+	while 1:
+		# read input from serial
+		list = shared.read(ser)
 
-	print label_map[int(clf.predict(list))]
+		#print list
+
+		print label_map[int(clf.predict(list))]
 
 	file.close()
 

@@ -1,4 +1,5 @@
 import serial
-ser = serial.Serial('/dev/ttyACM0', 9600)
-ser.flushInput()
-print ser.readline()
+import shared
+ser = shared.init()
+while 1:
+	print shared.read(ser)

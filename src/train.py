@@ -6,21 +6,21 @@ import shared
 import sys
 
 def main():
+	# open db file and set up writer
 	file = open('../data/db.csv', 'a')
 	writer = csv.writer(file)
 
+	# intialize serial read
 	ser = shared.init()
 
-	ser.flushInput()
+	# flush input initially
+	#ser.flushInput()
 
 	print "Reading from input..."
 	# read input from serial
-	serial_input = shared.read_from_serial(ser)
+	list = shared.read(ser)
 
-	print serial_input
-
-	# generate integer list from string
-	list = shared.list_from_string(serial_input)
+	print list
 	
 	# read in label for training data and append to list
 	label = raw_input('Enter a label: ')
