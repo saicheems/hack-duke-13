@@ -5,6 +5,7 @@ import serial
 import sys
 
 DEVICE = '/dev/ttyACM0'
+NUM_VAR = 10
 
 def init():
 	ser = serial.Serial(DEVICE, 9600)
@@ -39,12 +40,13 @@ def read(ser):
 	list = [-1]
 	sum = 0
 
-	while len(list) != 6 or sum != list[-1]:
+	# list[-2] is hash, list[-1] is push button
+	while len(list) != NUM_VAR or sum != list[-2]:
 		list = read_combined(ser)
 		sum = 0
-		for x in list[:-1]:
+		for x in list[:-2]:
 			sum = sum + x
 
 	list = [x * 10 for x in list]
 
-	return list[:-1]
+	return [list[-1], list[:-2]]

@@ -3,6 +3,7 @@ from sklearn import svm
 import csv
 import serial
 import shared
+import subprocess
 import sys
 
 def main():
@@ -30,10 +31,11 @@ def main():
 		# read input from serial
 		list = shared.read(ser)
 
-		#print list
-
-		print label_map[int(clf.predict(list))]
-
+		if list[0] > 0:
+			#print list
+			word = label_map[int(clf.predict(list[1]))]
+			subprocess.call('espeak '+'"'+word+'"'+' --stdout | aplay', shell=True)
+			print word
 	file.close()
 
 if __name__ == "__main__":

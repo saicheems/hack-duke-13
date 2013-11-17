@@ -18,7 +18,7 @@ def main():
 
 	print "Reading from input..."
 	# read input from serial
-	list = shared.read(ser)
+	list = shared.read(ser)[1]
 
 	print list
 	

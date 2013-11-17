@@ -2,4 +2,5 @@ import serial
 import shared
 ser = shared.init()
 while 1:
-	print shared.read(ser)
+	list = shared.read(ser)
+	print list[0], list[1]
