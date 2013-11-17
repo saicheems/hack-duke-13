@@ -34,7 +34,7 @@ def main():
 		if list[0] > 0:
 			#print list
 			word = label_map[int(clf.predict(list[1]))]
-			subprocess.call('espeak '+'"'+word+'"'+' --stdout | aplay', shell=True)
+			subprocess.call('espeak '+'"'+word+'"'+' -s 140 --stdout | aplay', shell=True)
 			print word
 	file.close()
 
