@@ -46,7 +46,9 @@ def read(ser):
 		sum = 0
 		for x in list[:-2]:
 			sum = sum + x
+		#print list
 
 	list = [x * 10 for x in list]
+	#print list
 
 	return [list[-1], list[:-2]]

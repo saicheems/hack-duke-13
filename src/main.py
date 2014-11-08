@@ -26,6 +26,7 @@ def main():
 	clf.fit(data, label)
 
 	#ser.flushInput()
+	print "i'm ready!"
 
 	while 1:
 		# read input from serial
